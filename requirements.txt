@@ -1,0 +1,5 @@
+# ComfyUI-Qwen3.5-Low-VRAM-GPU/requirements.txt
+llama-cpp-python>=0.3.27
+huggingface_hub>=0.20.0
+Pillow>=9.0.0
+numpy>=1.24.0
