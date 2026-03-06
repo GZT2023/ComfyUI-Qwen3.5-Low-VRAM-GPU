@@ -1,7 +1,5 @@
 # ComfyUI-Qwen3.5-Low-VRAM-GPU
 
-个人主页：🔗 [B站：赛博画师GZT](https://space.bilibili.com/702745384)
-
 本插件使用纯AI生成，已成功运行。
 以下内容也使用AI生成，存在一定胡诌成分，谨慎参考。
 This plugin is entirely AI-generated and has been successfully run. 
@@ -280,3 +278,4 @@ Apache License 2.0
 (本人不懂代码、不懂编程、不懂算法，AI不能解决的，基本都不一定能解决。)
 
 祝你使用愉快！🎉
+
