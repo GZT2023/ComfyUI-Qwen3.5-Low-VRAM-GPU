@@ -114,8 +114,6 @@ python -c "import llama_cpp; print('CUDA:', llama_cpp.llama_supports_gpu_offload
 | mmproj-F16.gguf | FP16 | ~1GB | ⭐ 通用推荐 |
 | mmproj-BF16.gguf | BF16 | ~1GB | NVIDIA Ampere+ |
 
-或者使用这个多模态投影： 🔗 [lmstudio-community/Qwen3.5-27B-GGUF]（https://modelscope.cn/models/lmstudio-community/Qwen3.5-27B-GGUF）
-mmproj-Qwen3.5-27B-BF16.gguf
 
 
 #### 模型存放路径
@@ -263,7 +261,6 @@ ComfyUI-Qwen3.5-Low-VRAM-GPU/
 - **llama-cpp-python**：提供 Python 绑定
 - **ComfyUI**：提供节点框架
 - **unsloth**：提供动态量化 GGUF 模型
-- **lmstudio-community**：提供多模态投影
 
 ---
 
@@ -278,4 +275,5 @@ Apache License 2.0
 (本人不懂代码、不懂编程、不懂算法，AI不能解决的，基本都不一定能解决。)
 
 祝你使用愉快！🎉
+
 
