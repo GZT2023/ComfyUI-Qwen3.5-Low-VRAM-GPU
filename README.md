@@ -1,279 +1,174 @@
 # ComfyUI-Qwen3.5-Low-VRAM-GPU
 
+充电支持：🔗 [B站：赛博画师GZT](https://space.bilibili.com/702745384)
+
+针对12G低显存GPU、32G低内存深度优化, 专为ComfyUI设计的Qwen3.5图像描述插件。 
+
+第一次运行，自动从国内ModelScope下载模型，完全阻断HuggingFace连接。下载模型之后，即可拔掉网线运行，可完全离线，网络环境友好。
+
+支持量化加载与智能显存管理。支持 Qwen3.5-2B/4B/9B/27B/35B-A3B 等模型。
+
+
 本插件使用纯AI生成，已成功运行。
-以下内容也使用AI生成，存在一定胡诌成分，谨慎参考。
+以下内容也使用AI生成。
+
 This plugin is entirely AI-generated and has been successfully run. 
-The following content is also AI-generated and may contain some fabrication, so please refer to it with caution.
+The following content is also generated using AI.
+
+##  ✨ 核心特性
+
+ 🚀 纯国内加速：默认从ModelScope下载模型，彻底规避HuggingFace连接问题，支持完全离线运行。
+
+💾 极致显存管理：
+
+自动切换卸载：切换模型时，自动卸载旧模型，杜绝资源残留。
+
+推理后可选卸载：生成描述后（默认开启），立即从显存/内存中卸载模型，为后续工作流（如生图）腾出全部空间。
+
+📊 低显存量化：支持 4bit 和 8bit 量化，加载2B/4B模型仅需2-4GB显存。
 
 
-🤖 在 ComfyUI 中本地运行 Qwen3.0/3.5 GGUF 量化模型，支持图片/视频提示词反推、深度思考模式、低显存优化
+🖥️ 优雅的文本显示：自带前端节点，直接显示生成的描述，支持框选复制，并完美适配深色/浅色主题。
 
----
+🔌 即插即用：完全集成ComfyUI节点系统，无需复杂配置。
 
-## ✨ 功能特性
+##  📦 安装
 
-- ✅ **双模型兼容**：支持 Qwen3.0 和 Qwen3.5 系列 GGUF 模型
-- ✅ **多模态支持**：图片提示词反推、视频提示词反推
-- ✅ **三种运行模式**：
-  - 🧠 深度思考模式（复杂推理、数学、代码）
-  - ⚡ 指令快速模式（简单对话、快速问答）
-  - 🎨 提示词专用模式（图片/视频提示词反推）
-- ✅ **显存优化**：
-  - 投影模型 (mmproj) 可加载到 CPU 内存，节约 2-3GB 显存
-  - 12GB 显存可流畅运行 27B 模型
-  - 支持 Flash Attention 2 加速
-- ✅ **自定义提示词工程**：支持自定义 system prompt
-- ✅ **本地离线运行**：无需网络，无需 API，完全隐私
-- ✅ **最新格式支持**：Z-Image Turbo、Flux.2 Klein、Qwen Image 等
+方法一：直接下载（推荐）
 
----
+进入ComfyUI的 custom_nodes 目录。
 
-## 📋 系统要求
+克隆本仓库：
 
-| 配置 | 最低要求 | 推荐配置 |
-|------|---------|---------|
-| **操作系统**  | Windows 11 |
-| **显存 (VRAM)** | 12GB+ |
-| **内存 (RAM)** | 32GB+ |
-| **Python** | 3.11+ |
-| **CUDA**   | 13.0|
-| **磁盘空间** |50GB+ |
 
-### 显存与模型推荐
+cd custom_nodes
 
-| 显存 | 推荐模型 | 量化 | 
-|------|---------|---------|
-| 12GB | Qwen3.5-27B | Q2_K | 
-
----
-
-## 🚀 快速安装
-
-### 步骤 1：安装插件
-
-```bash
-# 方法 A：手动安装（推荐）
-cd .\ComfyUI\custom_nodes
 git clone https://github.com/GZT2023/ComfyUI-Qwen3.5-Low-VRAM-GPU.git
-```
 
-### 步骤 2：安装依赖
+安装依赖：
 
-```bash
-# 进入插件目录
-cd .\ComfyUI\custom_nodes\ComfyUI-Qwen3.5-Low-VRAM-GPU
+pip install modelscope bitsandbytes opencv-python accelerate transformers
 
-# 使用 ComfyUI 嵌入式 Python 安装
-.\ComfyUI\python_embeded\python.exe -m pip install -r requirements.txt
-```
+注意：bitsandbytes 在Windows上可能需要预编译版本，如遇安装问题，可暂时不使用量化（选择 none）。
 
-如果出现推理错误，建议从源码编译llama_cpp_python
+方法二：手动安装
 
-1. 先卸载官方版本
-pip uninstall llama-cpp-python -y
+下载本仓库的ZIP压缩包，解压至 custom_nodes/ComfyUI-Qwen3.5-Low-VRAM-GPU/。
 
-2. 安装 fork 版本（从 GitHub 直接安装）
+在插件目录下，使用ComfyUI的Python环境运行：
 
-找一个空的英文路径目录，
 
-git clone https://github.com/JamePeng/llama-cpp-python.git
+pip install -r requirements.txt
 
-cd llama-cpp-python
+（请确保您已创建包含上述依赖的 requirements.txt 文件）
 
-git pull
+便携包环境的话，在便携包目录ComfyUI_windows_portable下运行：
 
-git submodule update --init --recursive
+.\python_embeded\python.exe -m pip install -r .\ComfyUI\custom_nodes\ComfyUI-Qwen3.5-Low-VRAM-GPU\requirements.txt
 
-$env:CMAKE_ARGS = "-DGGML_CUDA=on"
+## 🚀 快速开始
 
-pip install -e .
+重启ComfyUI，在节点菜单中找到分类 ComfyUI-Qwen3.5-Low-VRAM-GPU。
 
-编译成功后，测试是否成功：
-python -c "import llama_cpp; print('CUDA:', llama_cpp.llama_supports_gpu_offload())"
-应输出 True
+添加以下三个节点，并按下图连接：
 
+LoadQwen35Model (Low VRAM)：选择模型（如 Qwen3.5-2B）和量化等级。
 
+Qwen35Caption (Low VRAM)：连接模型和待处理的图像。
 
-### 步骤 3：下载模型
+ShowCaptionText (Low VRAM)：连接生成的文本，并直接显示结果。
 
-#### 官方模型页面
-🔗 [Qwen3.5-27B 官方页面 (ModelScope)](https://modelscope.cn/models/Qwen/Qwen3.5-27B)
 
-#### GGUF 量化模型下载
-🔗 [unsloth/Qwen3.5-27B-GGUF (ModelScope)](https://modelscope.cn/models/unsloth/Qwen3.5-27B-GGUF/)
+执行工作流。首次使用且未勾选 local_files_only 时，插件会自动从ModelScope下载模型至 ComfyUI/models/Qwen/ 目录。
 
-| 量化版本 | 文件大小 | 显存占用 | 推荐场景 |
-|---------|---------|---------|---------|
-| Q2_K | ~9.8 GB | 12GB | 测试/低显存 |
+第一次运行下载模型后，勾选local_files_only，即可拔掉网线运行，完全离线。
 
+生成的描述将实时显示在 ShowCaptionText 节点上，并可框选复制。
 
-#### 多模态投影文件（图片/视频分析必需）
+## 🧩 节点详解
 
-| 文件 | 精度 | 大小 | 推荐 |
-|------|------|------|------|
-| mmproj-F16.gguf | FP16 | ~1GB | ⭐ 通用推荐 |
-| mmproj-BF16.gguf | BF16 | ~1GB | NVIDIA Ampere+ |
+1. LoadQwen35Model (Low VRAM)
 
+功能：加载Qwen3.5模型，自动管理本地缓存。
 
+参数：
 
-#### 模型存放路径
+model_name: 选择模型尺寸（2B/4B/9B等）。
 
-```
-ComfyUI\models\Qwen-Low-VRAM\
+quantization: 量化等级 (none / 4bit / 8bit)，4bit可极大降低显存占用。
 
-    ├── Qwen3.5-27B-Q2_K.gguf       # 主模型
-    └── mmproj-Qwen3.5-27B-BF16.gguf      # 多模态投影
-```
+use_cpu: 强制使用CPU加载（极慢，不推荐）。
 
-### 步骤 4：重启 ComfyUI
+use_flash_attn: 启用Flash Attention 2（需PyTorch≥2.0）。
 
-```bash
-# 关闭 ComfyUI 后重新启动
-# 控制台应显示：[Qwen-Low-VRAM] ✓ 插件加载成功
-```
+local_files_only: True 时仅从本地加载，False 时优先本地，无缓存则从ModelScope下载。
 
----
+cache_dir: 自定义模型缓存路径（默认：ComfyUI/models/Qwen/）。
 
-## 📖 使用指南
+2. Qwen35Caption (Low VRAM)
 
-### 1. 🤖 Qwen 模型加载器
+功能：执行图像描述推理。
 
-**节点名称：** `QwenModelLoader`
+参数：
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `model_path` | 下拉选择 | - | GGUF 模型文件 |
-| `model_version` | 下拉选择 | 自动检测 | Qwen3.0 / Qwen3.5 |
-| `mode` | 下拉选择 | 提示词专用模式 | 运行模式选择 |
-| `n_gpu_layers` | 整数 | 99 | GPU 卸载层数（-1=全部） |
-| `n_ctx` | 整数 | 16384 | 上下文长度 |
-| `n_batch` | 整数 | 1024 | 批处理大小 |
-| `flash_attn` | 布尔 | True | 启用 Flash Attention |
-| `low_vram_mode` | 布尔 | False | 低显存模式 |
-| `offload_clip_to_cpu` | 布尔 | True | 投影模型加载到 CPU |
-| `mmproj_path` | 下拉选择 | None | 多模态投影文件 |
+model: 来自上一节点的模型对象。
 
-### 2. 💬 Qwen 文本生成
+images: 待描述的图像（ComfyUI的IMAGE类型）。
 
-**节点名称：** `QwenChatCompletion`
+system_prompt / user_prompt: 自定义提示词。
 
-**输入：** `qwen_model`、`prompt`、`max_tokens`、`temperature`、`top_p`、`top_k`、`presence_penalty`、`seed`
+temperature / top_p: 生成参数（0表示使用模型默认）。
 
-**输出：** `response`（最终回答）、`thinking_process`（思考过程）、`full_output`（完整输出）
+max_new_tokens: 最大生成长度。
 
-### 3. 🖼️ Qwen 图片提示词反推
+image_size: 图像预处理尺寸。
 
-**节点名称：** `QwenImagePromptReverse`
+disable_think: 默认开启，移除模型内部思考标签（如 <think>...</think>）。
 
-**输入：** `qwen_model`、`image`、`output_format`、`detail_level`、`enable_thinking`、`custom_system_prompt`
+unload_after_caption: 默认开启，生成后立即卸载模型，释放显存。
 
-**输出格式选项：** Z-Image Turbo ⭐、Z-Image Base、Qwen Image、Flux.2 Klein、Stable Diffusion XL、Midjourney V6、DALL-E 3、Flux.1、自定义
+3. ShowCaptionText (Low VRAM)
 
-**输出：** `prompt`（核心提示词）、`analysis`（画面分析）、`full_output`（完整输出）
+功能：在节点上直接显示生成的描述文本。
 
-### 4. 🎬 Qwen 视频提示词反推
+特点：文本直接呈现在节点界面，支持鼠标框选复制，并自动适应深色/浅色主题。
 
-**节点名称：** `QwenVideoPromptReverse`
+输入：text - 需要显示的字符串。
 
-**输入：** `qwen_model`、`images`、`frame_sample_rate`、`max_frames`、`output_format`、`enable_thinking`、`custom_system_prompt`
+⚙️ 依赖要求
 
-**输出格式选项：** Z-Image Turbo、Z-Image Base、Qwen Image、Flux.2 Klein、Stable Video Diffusion、Runway Gen-3、Pika 1.5、自定义
+ComfyUI 主程序（基础依赖如 torch, transformers 等）。
 
-**输出：** `prompt`（核心提示词）、`motion_description`（运动描述）、`full_output`（完整输出）
+额外必须安装：
 
----
 
-## ⚙️ 性能优化配置（12GB 显存推荐）
+modelscope
 
-| 设置 | 推荐值 | 说明 |
-|------|--------|------|
-| 量化版本 | Q2_K | 平衡精度和显存 |
-| n_gpu_layers | 99 | 全部加载到 GPU |
-| n_ctx | 16384 | 减少显存占用 |
-| n_batch | 1024 | 提高吞吐量 |
-| low_vram_mode | ❌ 关闭 | 12GB 不需要 |
-| offload_clip_to_cpu | ✅ 启用 | 节约 2-3GB 显存 |
-| flash_attn | ✅ 启用 | 加速 20-30% |
+bitsandbytes
 
----
+opencv-python
 
-## 🔧 常见问题
+accelerate
 
 
-**Q1: 插件加载失败，报错 `ModuleNotFoundError`**  
-A: 确保目录结构正确，运行 `pip install -r requirements.txt`，重启 ComfyUI。
+## ❓ 常见问题
 
-**Q2: 模型加载失败，报错 `Failed to load model`**  
-A: 检查模型文件路径是否正确，确认扩展名是 `.gguf`，尝试降低 `n_gpu_layers` 值。
+Q: 为什么看不到 ShowCaptionText 节点上的文本？
 
-**Q3: 图片分析报错 "未加载多模态投影文件"**  
-A: 下载 `mmproj-F16.gguf` 放入 `C:\ComfyUI\models\Qwen-Low-VRAM\`，在模型加载器节点中选择。
+A: 请确保您使用的是插件自带的前端文件 (js/showCaption.js)。如果文本不显示，尝试重启ComfyUI或检查控制台是否有JS错误。该节点已深度适配深色主题。
 
-**Q4: 显存不足 (OOM)**  
-A: 启用 `offload_clip_to_cpu`，减小 `n_gpu_layers`/`n_ctx`/`n_batch`，或使用更低量化版本。
+Q: 切换模型时显存没有立即释放怎么办？
 
-**Q5: 生成速度慢**  
-A: 启用 `flash_attn`，增大 `n_gpu_layers`/`n_batch`（显存允许），关闭 `low_vram_mode`。
+A: 插件已内置自动切换卸载机制。如果发现异常，可以尝试手动点击 LoadQwen35Model 节点加载新模型，旧模型会被自动清理。您也可以在工作流末尾开启 unload_after_caption。
 
----
+Q: 我想完全离线使用，该如何操作？
 
-## 📁 插件目录结构
+A: 1. 首次使用时，设置 local_files_only=False，让插件联网从ModelScope下载模型。2. 下载完成后，将 local_files_only 设为 True，此后插件将完全离线运行，不再有任何网络请求。
 
-```
-ComfyUI-Qwen3.5-Low-VRAM-GPU/
-├── __init__.py                 # 插件入口
-├── requirements.txt            # 依赖
-├── README.md                   # 说明文档
-├── nodes/
-│   ├── __init__.py             # 节点导入
-│   ├── model_loader.py         # 模型加载器
-│   ├── chat_completion.py      # 文本生成
-│   ├── image_prompt_reverse.py # 图片反推
-│   └── video_prompt_reverse.py # 视频反推
-└── web/                        # 前端 UI（可选）
-```
+Q: 如何卸载插件？
 
----
+A: 直接从 custom_nodes 目录中删除 ComfyUI-Qwen3.5-Low-VRAM-GPU 文件夹即可。已下载的模型缓存（默认在 models/Qwen/）需手动删除。
 
-## 📝 更新日志
+📝 更新日志
 
-### v1.1.0 (2026-02-26)
-- ✅ 新增自定义 system prompt 输入
-- ✅ 更新提示词格式：Z-Image Turbo、Flux.2 Klein、Qwen Image
-- ✅ 优化投影模型 CPU 卸载，节约 2-3GB 显存
-- ✅ 修复 `chat_template_kwargs` 兼容性问题
-- ✅ 修复图像维度处理 bug
-- ✅ 统一节点分类为 `Qwen-Low-VRAM`
-
-### v1.0.0 (2026-02-25)
-- ✅ 初始版本发布
-- ✅ 支持 Qwen3.0/3.5 GGUF 模型
-- ✅ 支持思考模式/指令模式/提示词模式切换
-- ✅ 支持图片/视频提示词反推
-- ✅ 低显存优化 + Flash Attention 2 支持
-
----
-
-## 🙏 致谢
-
-- ** Qwen **：提供 Qwen3.0/3.5 模型
-- **llama.cpp**：提供 GGUF 推理引擎
-- **llama-cpp-python**：提供 Python 绑定
-- **ComfyUI**：提供节点框架
-- **unsloth**：提供动态量化 GGUF 模型
-
----
-
-## 📄 许可证
-
-Apache License 2.0
-
----
-
-> 💡 **提示**：如有问题，请提供操作系统、显存大小、ComfyUI 版本、Python 版本和完整错误日志，让其他人或AI帮你解决。
-
-(本人不懂代码、不懂编程、不懂算法，AI不能解决的，基本都不一定能解决。)
-
-祝你使用愉快！🎉
-
-
+2026-03-11: 发布首个正式版本，实现核心功能、低显存管理及ModelScope优先下载。
