@@ -4,6 +4,10 @@
 
 针对12G低显存GPU、32G低内存深度优化, 专为ComfyUI设计的Qwen3.5图像描述插件。 
 
+![示例图片](workflows/屏幕截图 2026-03-11 051743.png)
+
+![示例图片](workflows/Qwen3.5图片反推提示词生图.png)
+
 第一次运行，自动从国内ModelScope下载模型，完全阻断HuggingFace连接。下载模型之后，即可拔掉网线运行，可完全离线，网络环境友好。
 
 支持量化加载与智能显存管理。支持 Qwen3.5-2B/4B/9B/27B/35B-A3B 等模型。
@@ -172,3 +176,4 @@ A: 直接从 custom_nodes 目录中删除 ComfyUI-Qwen3.5-Low-VRAM-GPU 文件夹
 📝 更新日志
 
 2026-03-11: 发布首个正式版本，实现核心功能、低显存管理及ModelScope优先下载。
+
