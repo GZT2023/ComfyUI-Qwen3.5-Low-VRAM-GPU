@@ -1,0 +1,737 @@
+{
+  "id": "88ac5dad-efd7-40bb-84fe-fbaefdee1fa9",
+  "revision": 0,
+  "last_node_id": 213,
+  "last_link_id": 390,
+  "nodes": [
+    {
+      "id": 185,
+      "type": "CLIPLoader",
+      "pos": [
+        417.7337770871869,
+        54.451456089069865
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            347,
+            355
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ]
+    },
+    {
+      "id": 188,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        764.4060456004927,
+        -102.01220519280534
+      ],
+      "size": [
+        315,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            352
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ]
+    },
+    {
+      "id": 183,
+      "type": "KSampler",
+      "pos": [
+        763.404932018741,
+        69.07991223850391
+      ],
+      "size": [
+        315,
+        262
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 349
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 350
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 351
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 352
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            353
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        504896815461881,
+        "randomize",
+        9,
+        1,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 182,
+      "type": "SaveImage",
+      "pos": [
+        1130.3680921878467,
+        -210.94721647352156
+      ],
+      "size": [
+        380.96578351899007,
+        413.89387222204255
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 348
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "测试\\ComfyUI_v2_03"
+      ]
+    },
+    {
+      "id": 186,
+      "type": "VAELoader",
+      "pos": [
+        394.370736766778,
+        -74.23455191504732
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            354
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ]
+    },
+    {
+      "id": 162,
+      "type": "LoadImage",
+      "pos": [
+        357.3656347666305,
+        -450.3175982289283
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            388
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.7"
+        }
+      },
+      "widgets_values": [
+        "test3.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 209,
+      "type": "ShowCaptionText (Low VRAM)",
+      "pos": [
+        1158.4635338209175,
+        -721.1915264723388
+      ],
+      "size": [
+        351.57638857518157,
+        425.02650365017394
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 389
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowCaptionText (Low VRAM)"
+      },
+      "widgets_values": [
+        "这是一张人物肖像照片，主体为一位年轻女性，她身着传统风格服饰，背景是云雾缭绕的山景。\n\n该女性位于画面中央偏左位置，正对镜头，头部略微倾斜。她的黑色长发盘成高髻，用一根浅色发簪固定，几缕发丝自然垂落在脸颊两侧。她化有精致妆容，包括明显的黑色眼线和鲜红色口红，眼神直视前方。\n\n她穿着一件深蓝色内衬、领口和袖口带有酒红色镶边的传统式服装，外披一件厚实的白色毛绒外套，腰间系着一条酒红色腰带。\n\n背景是壮丽的山景，可见嶙峋的岩石山峰和翻滚的云海，天空呈灰白色，光线柔和。右侧边缘可见部分松树和石质栏杆，表明拍摄地点可能为高山观景台或景区。整体构图突出人物与自然景观的融合，氛围宁静而富有东方美学气息。"
+      ]
+    },
+    {
+      "id": 184,
+      "type": "UNETLoader",
+      "pos": [
+        713.8413001378333,
+        -292.2583204561696
+      ],
+      "size": [
+        372.00963278809564,
+        140.22012168291576
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            349
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 189,
+      "type": "CLIPTextEncode",
+      "pos": [
+        418.3617894147211,
+        208.06299226189262
+      ],
+      "size": [
+        274.3658203125,
+        88
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 355
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 390
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            350
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 181,
+      "type": "CLIPTextEncode",
+      "pos": [
+        417.4800664708724,
+        257.4651957100263
+      ],
+      "size": [
+        425.27801513671875,
+        180.6060791015625
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 347
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            351
+          ]
+        }
+      ],
+      "title": "CLIP Text Encode (Negative Prompt)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 187,
+      "type": "VAEDecode",
+      "pos": [
+        443.00972390491387,
+        304.25747339348
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 353
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 354
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            348
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.1",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.3.75"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 213,
+      "type": "Qwen35Caption (Low VRAM)",
+      "pos": [
+        688.7451679802398,
+        -710.5076918804398
+      ],
+      "size": [
+        424.8803936111856,
+        364.88358555831644
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "QWEN35_MODEL",
+          "link": 387
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 388
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            389,
+            390
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Qwen35Caption (Low VRAM)"
+      },
+      "widgets_values": [
+        "You are a professional image captioning assistant. Describe the image in detail, including subjects, actions, scene, objects, and any visible text. Use clear and concise natural language. Do not include any evaluations, opinions, or markdown formatting. The description should be suitable for training image generation models.",
+        "请描述这张图片。",
+        0,
+        0,
+        1024,
+        1024,
+        true,
+        false
+      ]
+    },
+    {
+      "id": 212,
+      "type": "LoadQwen35Model (Low VRAM)",
+      "pos": [
+        292.3443276464033,
+        -710.8595862407911
+      ],
+      "size": [
+        332.40685094912374,
+        209.46413073817826
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "QWEN35_MODEL",
+          "type": "QWEN35_MODEL",
+          "links": [
+            387
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadQwen35Model (Low VRAM)"
+      },
+      "widgets_values": [
+        "Qwen3.5-4B",
+        "none",
+        false,
+        false,
+        false,
+        true,
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      347,
+      185,
+      0,
+      181,
+      0,
+      "CLIP"
+    ],
+    [
+      348,
+      187,
+      0,
+      182,
+      0,
+      "IMAGE"
+    ],
+    [
+      349,
+      184,
+      0,
+      183,
+      0,
+      "MODEL"
+    ],
+    [
+      350,
+      189,
+      0,
+      183,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      351,
+      181,
+      0,
+      183,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      352,
+      188,
+      0,
+      183,
+      3,
+      "LATENT"
+    ],
+    [
+      353,
+      183,
+      0,
+      187,
+      0,
+      "LATENT"
+    ],
+    [
+      354,
+      186,
+      0,
+      187,
+      1,
+      "VAE"
+    ],
+    [
+      355,
+      185,
+      0,
+      189,
+      0,
+      "CLIP"
+    ],
+    [
+      387,
+      212,
+      0,
+      213,
+      0,
+      "QWEN35_MODEL"
+    ],
+    [
+      388,
+      162,
+      0,
+      213,
+      1,
+      "IMAGE"
+    ],
+    [
+      389,
+      213,
+      0,
+      209,
+      0,
+      "STRING"
+    ],
+    [
+      390,
+      213,
+      0,
+      189,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "B站：赛博画师GZT",
+      "bounding": [
+        398.1162782413011,
+        -964.5833062286661,
+        1128.9108001178665,
+        181.34558311564683
+      ],
+      "color": "#b58b2a",
+      "font_size": 128,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5989500000000084,
+      "offset": [
+        201.52534373225174,
+        807.4951250363581
+      ]
+    },
+    "frontendVersion": "1.39.19",
+    "workflowRendererVersion": "LG",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}
