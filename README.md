@@ -99,6 +99,10 @@ ShowCaptionText (Low VRAM)：连接生成的文本，并直接显示结果。
 
 3、如果显存和内存都十分充足，LoadQwen35Model (Low VRAM)节点的force_clean_before_switch 也设置为False，这样不卸载模型，达到最大速度，占用最大资源，也保留反推1次不断生图抽卡的特性。
 
+![示例图片](workflows/111.png)
+
+![示例图片](workflows/222.png)
+
 ## 🧩 节点详解
 
 1. LoadQwen35Model (Low VRAM)
@@ -202,6 +206,7 @@ A: 直接从 custom_nodes 目录中删除 ComfyUI-Qwen3.5-Low-VRAM-GPU 文件夹
 无担保：本软件按“现状”提供，不提供任何形式的明示或暗示担保，包括但不限于适销性、特定用途适用性和非侵权性的担保。
 
 如果您不同意上述条款，请立即停止使用并删除本项目。
+
 
 
 
