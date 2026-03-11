@@ -91,6 +91,14 @@ ShowCaptionText (Low VRAM)：连接生成的文本，并直接显示结果。
 
 生成的描述将实时显示在 ShowCaptionText 节点上，并可框选复制。
 
+使用注意技巧：
+
+1、如果需要连续处理多张图片，将Qwen35Caption (Low VRAM) 节点中的 unload_after_caption 设置为 False。这样模型会一直驻留在显存/内存中，后续更换图片时可以直接复用，无需重新加载，但占用大量显存、内存。
+
+2、如果需要反推单张图片，然后不断抽卡生图，则将Qwen35Caption (Low VRAM) 节点中的 unload_after_caption 设置为 True。这样模型会自动卸载，节省大量显存、内存。
+
+3、如果显存和内存都十分充足，LoadQwen35Model (Low VRAM)节点的force_clean_before_switch 也设置为False，这样不卸载模型，达到最大速度，占用最大资源，也保留反推1次不断生图抽卡的特性。
+
 ## 🧩 节点详解
 
 1. LoadQwen35Model (Low VRAM)
@@ -194,5 +202,6 @@ A: 直接从 custom_nodes 目录中删除 ComfyUI-Qwen3.5-Low-VRAM-GPU 文件夹
 无担保：本软件按“现状”提供，不提供任何形式的明示或暗示担保，包括但不限于适销性、特定用途适用性和非侵权性的担保。
 
 如果您不同意上述条款，请立即停止使用并删除本项目。
+
 
 
