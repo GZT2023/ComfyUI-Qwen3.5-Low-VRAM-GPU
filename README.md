@@ -2,7 +2,7 @@
 
 针对12G低显存GPU、32G低内存深度优化, 专为ComfyUI设计的Qwen3.5图像描述插件。  
 
-![示例图片](workflows/test2.png)
+![示例图片](workflows/test3.png)
 
 第一次运行，自动从国内ModelScope下载模型，完全阻断HuggingFace连接。下载模型之后，即可拔掉网线运行，可完全离线，网络环境友好。
 
@@ -32,7 +32,7 @@ The following content is also generated using AI.
 
 🔌 即插即用：完全集成ComfyUI节点系统，无需复杂配置。
 
-![示例图片](workflows/Qwen3.5图片反推提示词生图.png)
+![示例图片](workflows/Qwen3.5图片反推提示词生图2.png)
 
 
 ##  📦 安装
