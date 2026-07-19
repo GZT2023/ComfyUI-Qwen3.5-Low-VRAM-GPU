@@ -1,3 +1,5 @@
+充电支持：🔗 [B站：赛博画师GZT](https://space.bilibili.com/702745384)
+
 # ComfyUI-Qwen3.5-Low-VRAM-GPU
 
 针对12G低显存GPU、32G低内存深度优化, 专为ComfyUI设计的Qwen3.5图像描述插件。  
